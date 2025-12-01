@@ -23,7 +23,8 @@ def main():
     crawler = WebCrawler(
         start_url=start_url, 
         max_pages=args.max_pages, 
-        max_workers=args.workers
+        max_workers=args.workers,
+        user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
     )
     data = crawler.crawl()
     

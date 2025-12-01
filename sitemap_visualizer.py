@@ -306,7 +306,7 @@ class SitemapVisualizer:
         
         <div class="section">
             <h2>🧭 グローバルナビゲーション分析</h2>
-            <p style="margin-bottom: 10px; color: #666;">全ページの30%以上からリンクされている共通リンク（ヘッダー/フッター等）<br>※これらはマインドマップからは除外されています。</p>
+            <p style="margin-bottom: 10px; color: #666;">被リンク数上位ページ（グラフから除外されています）</p>
             <div class="category-list">
                 {self._generate_global_nav_html()}
             </div>
@@ -609,11 +609,10 @@ class SitemapVisualizer:
             base_url_map[url_obj.url] = base_url
 
         # グローバルナビゲーション（共通リンク）の判定
-        total_pages = len(self.data.urls)
-        global_nav_threshold = total_pages * 0.30
-        global_nav_urls = set()
-        if total_pages > 0:
-            global_nav_urls = {u.url for u in self.data.urls if u.in_degree >= global_nav_threshold}
+        # 被リンク数上位20ページ（または全体の10%のいずれか少ない方）を除外
+        sorted_by_degree = sorted(self.data.urls, key=lambda x: x.in_degree, reverse=True)
+        top_n = min(20, max(10, len(sorted_by_degree) // 10))  # 最低10、最大20
+        global_nav_urls = {u.url for u in sorted_by_degree[:top_n] if u.in_degree > 0}
 
         # ノードの生成
         for base_url, data in aggregated_nodes.items():
@@ -694,15 +693,16 @@ class SitemapVisualizer:
 
     def _generate_global_nav_html(self) -> str:
         """グローバルナビゲーション（共通リンク）のHTML生成"""
-        total_pages = len(self.data.urls)
-        if total_pages == 0:
+        if not self.data.urls:
             return ""
             
-        threshold = total_pages * 0.30
-        global_nav_items = [u for u in self.data.urls if u.in_degree >= threshold]
-        global_nav_items.sort(key=lambda x: x.in_degree, reverse=True)
+        # 被リンク数上位20ページ（または全体の10%のいずれか少ない方）を抽出
+        sorted_by_degree = sorted(self.data.urls, key=lambda x: x.in_degree, reverse=True)
+        top_n = min(20, max(10, len(sorted_by_degree) // 10))
+        global_nav_items = [u for u in sorted_by_degree[:top_n] if u.in_degree > 0]
         
         html_parts = []
+        total_pages = len(self.data.urls)
         for item in global_nav_items:
             percentage = (item.in_degree / total_pages) * 100
             html_parts.append(f"""
