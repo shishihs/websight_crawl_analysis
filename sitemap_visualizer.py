@@ -306,7 +306,7 @@ class SitemapVisualizer:
         
         <div class="section">
             <h2>🧭 グローバルナビゲーション分析</h2>
-            <p style="margin-bottom: 10px; color: #666;">全ページの5%以上からリンクされている共通リンク（ヘッダー/フッター等）<br>※これらはマインドマップからは除外されています。</p>
+            <p style="margin-bottom: 10px; color: #666;">全ページの30%以上からリンクされている共通リンク（ヘッダー/フッター等）<br>※これらはマインドマップからは除外されています。</p>
             <div class="category-list">
                 {self._generate_global_nav_html()}
             </div>
@@ -388,13 +388,8 @@ class SitemapVisualizer:
             tooltip: {{
                 formatter: function (params) {{
                     if (params.dataType === 'node') {{
-                        // ドメインを除去して表示
-                        try {{
-                            const url = new URL(params.data.value);
-                            return params.data.categoryName + ' > ' + url.pathname;
-                        }} catch (e) {{
-                            return params.data.categoryName + ' > ' + params.name;
-                        }}
+                        // ドメインを除去して表示 (pathプロパティを使用)
+                        return params.data.categoryName + ' > ' + params.data.path;
                     }}
                     return params.name;
                 }}
@@ -615,7 +610,7 @@ class SitemapVisualizer:
 
         # グローバルナビゲーション（共通リンク）の判定
         total_pages = len(self.data.urls)
-        global_nav_threshold = total_pages * 0.05
+        global_nav_threshold = total_pages * 0.30
         global_nav_urls = set()
         if total_pages > 0:
             global_nav_urls = {u.url for u in self.data.urls if u.in_degree >= global_nav_threshold}
@@ -659,6 +654,7 @@ class SitemapVisualizer:
             nodes.append({
                 "id": base_url,
                 "name": name, # ラベルは短い名前
+                "path": path, # ツールチップ用のパス（ドメインなし）
                 "symbolSize": symbol_size,
                 "value": in_degree,
                 "category": cat_idx,
@@ -702,7 +698,7 @@ class SitemapVisualizer:
         if total_pages == 0:
             return ""
             
-        threshold = total_pages * 0.05
+        threshold = total_pages * 0.30
         global_nav_items = [u for u in self.data.urls if u.in_degree >= threshold]
         global_nav_items.sort(key=lambda x: x.in_degree, reverse=True)
         
