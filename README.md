@@ -19,13 +19,26 @@
     pip install -r requirements.txt
     ```
 
-2.  **Run the Crawler**:
+2.  **Choose Analysis Method**:
+
+    **Option A: Full Analysis (Sitemap + Crawl)**
     ```bash
-    python3 crawl_websight.py --url https://www.lifenet-seimei.co.jp/
+    python3 analyze_all.py --sitemap-url https://example.com/sitemap.xml --crawl-url https://example.com/
     ```
 
-3.  **View Report**:
-    Open `websight_crawl_report.html` in your browser.
+    **Option B: Crawl Only**
+    ```bash
+    python3 crawl_websight.py --url https://example.com/
+    ```
+
+    **Option C: Sitemap Only**
+    ```bash
+    python3 analyze_websight.py
+    ```
+
+3.  **View Reports**:
+    - `websight_crawl_report.html` - Crawl analysis
+    - `websight_sitemap_report.html` - Sitemap analysis
 
 ## Documentation
 - [Architecture Overview](docs/architecture.md): System design and component details.

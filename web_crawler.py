@@ -16,14 +16,24 @@ from sitemap_data import SitemapData
 class WebCrawler:
     """ウェブサイトクローラークラス"""
     
-    def __init__(self, start_url: str, max_pages: int = 1000, max_workers: int = 10, user_agent: str = 'WebCrawler/1.0'):
+    def __init__(self, start_url: str, max_pages: int = 1000, max_workers: int = 10, user_agent: str = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'):
         self.start_url = start_url
         self.domain = urlparse(start_url).netloc
         self.max_pages = max_pages
         self.max_workers = max_workers
         self.user_agent = user_agent
+        
+        # セッション設定（User-Agent追加でbot検出回避）
         self.session = requests.Session()
-        self.session.headers.update({'User-Agent': user_agent})
+        self.session.headers.update({
+            'User-Agent': user_agent,
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+            'Accept-Language': 'ja,en-US;q=0.9,en;q=0.8',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'DNT': '1',
+            'Connection': 'keep-alive',
+            'Upgrade-Insecure-Requests': '1'
+        })
         
         self.visited: Set[str] = set()
         self.urls_to_visit: deque = deque()
