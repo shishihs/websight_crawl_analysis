@@ -21,18 +21,19 @@
 
 2.  **Run the Crawler**:
     ```bash
-    python3 crawl_lifenet.py --url https://www.lifenet-seimei.co.jp/
+    python3 crawl_websight.py --url https://www.lifenet-seimei.co.jp/
     ```
 
 3.  **View Report**:
-    Open `lifenet_crawl_report.html` in your browser.
+    Open `websight_crawl_report.html` in your browser.
 
 ## Documentation
 - [Architecture Overview](docs/architecture.md): System design and component details.
 - [Usage Guide](docs/usage.md): Detailed command-line options and report explanation.
 
 ## Project Structure
-- `crawl_lifenet.py`: Main entry point.
+- `crawl_websight.py`: Main entry point for web crawling.
+- `analyze_websight.py`: Entry point for sitemap.xml analysis.
 - `web_crawler.py`: Crawling logic.
 - `sitemap_visualizer.py`: Report generation and visualization logic.
 - `sitemap_data.py`: Data models.

@@ -58,35 +58,23 @@ def main():
     
     print()
     
-    # データを保存
-    print("=" * 60)
-    print("💾 データ保存中...")
-    print("=" * 60)
+    # データの保存
+    print("\n💾 データを保存中...")
+    data.save_json("websight_sitemap.json")
+    data.save_csv("websight_sitemap.csv")
     
-    data.save_json("lifenet_sitemap.json")
-    data.save_csv("lifenet_sitemap.csv")
-    
-    # 可視化レポートを生成
-    print()
-    print("=" * 60)
-    print("🎨 可視化レポート生成中...")
-    print("=" * 60)
-    
+    # レポート生成
+    print("\n🎨 レポートを生成中...")
     visualizer = SitemapVisualizer(data)
-    visualizer.generate_html_report(
-        "lifenet_sitemap_report.html",
-        title="ライフネット生命保険 サイトマップ解析レポート"
-    )
+    visualizer.generate_html_report("websight_sitemap_report.html", title="WebSight Analysis Report")
     
-    print()
-    print("=" * 60)
-    print("✅ 解析完了！")
-    print("=" * 60)
+    print("\n✅ 完了しました！")
+    print("   open websight_sitemap_report.html")
     print()
     print("生成されたファイル:")
-    print("  📄 lifenet_sitemap.json         - JSON形式のデータ")
-    print("  📄 lifenet_sitemap.csv          - CSV形式のデータ")
-    print("  📄 lifenet_sitemap_report.html  - インタラクティブなレポート")
+    print("  📄 websight_sitemap.json         - JSON形式のデータ")
+    print("  📄 websight_sitemap.csv          - CSV形式のデータ")
+    print("  📄 websight_sitemap_report.html  - インタラクティブなレポート")
     print()
     print("レポートを表示するには:")
     print("  open lifenet_sitemap_report.html")

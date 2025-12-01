@@ -8,18 +8,18 @@
     ```
 
 ## Running the Crawler
-The main entry point is `crawl_lifenet.py`.
+The main entry point is `crawl_websight.py`.
 
 ### Basic Usage
-Crawl the default target (LifeNet Seimei) with default settings:
+Crawl a website with default settings:
 ```bash
-python3 crawl_lifenet.py
+python3 crawl_websight.py --url https://example.com/
 ```
 
 ### Custom URL
 Crawl a specific website:
 ```bash
-python3 crawl_lifenet.py --url https://example.com/
+python3 crawl_websight.py --url https://example.com/
 ```
 
 ### Configuration Options
@@ -31,11 +31,11 @@ python3 crawl_lifenet.py --url https://example.com/
 
 **Example: Large Crawl with Low Load**
 ```bash
-python3 crawl_lifenet.py --url https://example.com/ --max-pages 2000 --workers 2
+python3 crawl_websight.py --url https://example.com/ --max-pages 2000 --workers 2
 ```
 
 ## Understanding the Report
-The generated `lifenet_crawl_report.html` contains:
+The generated `websight_crawl_report.html` contains:
 
 1.  **Site Structure Mind Map**:
     - Interactive graph showing page relationships.

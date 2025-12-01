@@ -7,7 +7,7 @@ from sitemap_visualizer import SitemapVisualizer
 from datetime import datetime
 
 def main():
-    parser = argparse.ArgumentParser(description='ウェブサイト構造解析クローラー')
+    parser = argparse.ArgumentParser(description='WebSight Analysis Crawler')
     parser.add_argument('--url', type=str, default="https://www.lifenet-seimei.co.jp/", help='開始URL')
     parser.add_argument('--max-pages', type=int, default=500, help='最大取得ページ数')
     parser.add_argument('--workers', type=int, default=10, help='並列ワーカー数')
@@ -31,16 +31,20 @@ def main():
     
     # データの保存
     print("\n💾 データを保存中...")
-    data.save_json("lifenet_crawl_data.json")
-    data.save_csv("lifenet_crawl_data.csv")
+    crawler.data.save_json('websight_crawl_data.json')
+    print("✓ JSONファイルを保存しました: websight_crawl_data.json")
+    
+    crawler.data.save_csv('websight_crawl_data.csv')
+    print("✓ CSVファイルを保存しました: websight_crawl_data.csv")
     
     # レポート生成
     print("\n🎨 レポートを生成中...")
-    visualizer = SitemapVisualizer(data)
-    visualizer.generate_html_report("lifenet_crawl_report.html", title="ライフネット生命 サイト構造解析レポート")
+    visualizer = SitemapVisualizer(crawler.data)
+    visualizer.generate_html_report('websight_crawl_report.html')
+    print("✓ HTMLレポートを生成しました: websight_crawl_report.html")
     
     print("\n✅ 完了しました！")
-    print("   open lifenet_crawl_report.html")
+    print(f"   open websight_crawl_report.html")
 
 if __name__ == "__main__":
     main()

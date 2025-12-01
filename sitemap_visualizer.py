@@ -15,8 +15,8 @@ class SitemapVisualizer:
     def __init__(self, data: SitemapData):
         self.data = data
     
-    def generate_html_report(self, output_path: str, title: str = "サイトマップ解析レポート"):
-        """インタラクティブなHTMLレポートを生成"""
+    def generate_html_report(self, output_path: str, title: str = "WebSight Analysis Report"):
+        """HTMLレポートを生成して保存"""
         stats = self.data.get_statistics()
         
         # ツリー構造データを生成
